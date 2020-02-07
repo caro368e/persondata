@@ -21,6 +21,9 @@
             max-width: 300px;
         }
 
+        p {
+            margin-left: 10px;
+        }
     </style>
 
 </head>
@@ -31,9 +34,9 @@
         <article class="oversigt">
             <h3 class="navn"></h3>
             <p class="efternavn"></p>
-            <img src="" alt="">
             <p class="alder"></p>
             <p class="køn"></p>
+            <img src="" alt="">
         </article>
     </template>
 
@@ -67,13 +70,12 @@
                 let klon = oversigtTemplate.cloneNode(true).content;
                 klon.querySelector(".navn").textContent = person.gsx$navn.$t;
                 klon.querySelector(".efternavn").textContent = person.gsx$efternavn.$t;
+                klon.querySelector(".køn").textContent = person.gsx$sex.$t;
+                klon.querySelector(".alder").textContent = person.gsx$alder.$t;
                 klon.querySelector("img").src = person.gsx$billede.$t;
                 container.appendChild(klon);
 
             })
         }
-
     </script>
-</body>
-
-</html>
+</body></html>
