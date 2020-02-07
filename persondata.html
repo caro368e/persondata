@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        #data-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            margin: 0 auto;
+            grid-gap: 10px;
+        }
+
+        .oversigt {
+            border: 1px #000 solid;
+        }
+
+        img {
+            max-width: 300px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <section id="data-container"></section>
+    <template>
+        <article class="oversigt">
+            <h3 class="navn"></h3>
+            <p class="efternavn"></p>
+            <img src="" alt="">
+            <p class="alder"></p>
+            <p class="køn"></p>
+        </article>
+    </template>
+
+
+    <script>
+        const endpoint = "https://spreadsheets.google.com/feeds/list/1XWWbfWszD7f4jHqp51V_oT3pkHuR-ceEUw4YtrvK7F0/od6/public/values?alt=json";
+
+        let personData = [];
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            hentData();
+        }
+
+        async function hentData() {
+            const response = await fetch(endpoint);
+            personData = await response.json();
+            console.log(personData);
+            visPersoner();
+        }
+
+        visPersoner();
+
+        function visPersoner() {
+
+            const container = document.querySelector("#data-container");
+            const oversigtTemplate = document.querySelector("template");
+
+            personData.feed.entry.forEach(person => {
+                let klon = oversigtTemplate.cloneNode(true).content;
+                klon.querySelector(".navn").textContent = person.gsx$navn.$t;
+                klon.querySelector(".efternavn").textContent = person.gsx$efternavn.$t;
+                klon.querySelector("img").src = person.gsx$billede.$t;
+                container.appendChild(klon);
+
+            })
+        }
+
+    </script>
+</body>
+
+</html>
